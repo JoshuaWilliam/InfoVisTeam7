@@ -11,3 +11,7 @@ div.tooltipChord {
   border-width: 1px;
   border-color: black;
 }
+
+.ticklabels {
+  font: 10px Verdana;
+}
