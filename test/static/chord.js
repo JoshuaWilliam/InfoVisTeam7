@@ -14,7 +14,7 @@ txtFile.send();
 function createGraph(data){
   var subs = Object.keys(data)
   var innerRadius = 250;
-  var outerRadius = 256;
+  var outerRadius = 260;
 
 
   var svg = d3.select("body")
@@ -67,50 +67,48 @@ function createGraph(data){
         .radius(innerRadius)
       )
       .style("fill", function(d, i){ return myColor(d.source.index) }) // colors depend on the source group. Change to target otherwise.
-      .style("stroke", "#2b2b2b");
-
-  var group = svg
+      .style("stroke", "#2b2b2b")
+      .style("stroke-width", 0.7)
+      .attr("source", function(d) {return d.source.index})
+      .attr("target", function(d) {return d.target.index})
+  /*var group = svg
     .datum(res)
     .append("g")
     .selectAll("g")
     .data(function(d) { return d.groups; })
     .enter()
-
+*/
 
 
   // add the groups on the outer part of the circle
-  group
+var group = svg
     .datum(res)
     .append("g")
     .attr("class", "group")
     .selectAll("g")
     .data(function(d) { return d.groups; })
     .enter()
-    .append("g")
+
+var arcs = group
     .append("path")
       .style("fill", function(d,i){ return myColor(i) })
       .style("stroke", "#2b2b2b")
+      .style("stroke-width", 0.7)
+      .attr("class", "arc")
       .attr("d", d3.arc()
         .innerRadius(innerRadius)
         .outerRadius(outerRadius)
-      )
+      );
 
-  group.append("g")
 
-    .append("text")
+  group.append("text")
     .attr("transform", function(d, i) {
-
-      var extra_rot =  (d.groups[i].startAngle + d.groups[i].endAngle) / 2 > Math.PI ? 180 : 0;
-      console.log(extra_rot)
-      return "rotate(" + ((d.groups[i].startAngle + d.groups[i].endAngle) / (2 * Math.PI) * 180 - 90) + ")"+ "translate(" + (outerRadius+ 10).toString() + ",0)";})
-    //.attr("transform", function(d, i) { return (d.groups[i].startAngle + d.groups[i].endAngle) / 2 > Math.PI ? "rotate(180)translate(-16)" : null; })
+      //var extra_rot =  (d.startAngle + d.endAngle) / 2 > Math.PI ? 180 : 0;
+      return "rotate(" + ((d.startAngle + d.endAngle) / (2 * Math.PI) * 180 - 90) + ")"+ "translate(" + (outerRadius+ 10).toString() + ",0)";})
     .attr("class", "ticklabels")
-    .text(function(d, i) {
-      return subs[i]
+    .text(function(d) {
+      return subs[d.index]
     });
-
-
-
 
 
 
@@ -124,7 +122,7 @@ function createGraph(data){
     links.on("mouseover", function (d){
       d3.selectAll("path").style("opacity", 0.25)
       d3.select(this)
-      .style("stroke-width", 2)
+      .style("stroke-width", 1.5)
       .style("opacity", 1)
       tooltip.style("visibility", "visible")
       tooltipText = "<b>" + subs[d["source"]["index"]] + "</b>:  " + d["source"]["value"] + "<br><b>"+  subs[d["target"]["index"]] + "</b>:   " + d["target"]["value"]
@@ -138,11 +136,31 @@ function createGraph(data){
 
   links.on("mouseout", function(){
     d3.select(this).style("stroke", "black")
-    .style("stroke-width", 1)
+    .style("stroke-width", 0.7)
     d3.selectAll("path").style("opacity", 1)
     tooltip.style("visibility", "hidden");
   })
 
+  arcs.on("click", function (d){
+    d3.selectAll("group")
+      .style("opacity", 0.25)
+    d3.selectAll("path")
+      .style("opacity", function (link) {
+        console.log(link)
+
+        if (link.source.index === d.index){
+          return 1
+        }
+        else if (link.target.index === d.index){
+          return 1
+        }
+        else {
+          return 0.25
+        }
+      })
+    d3.select(this)
+    .style("opacity", 1)
+  })
 
 }
 
