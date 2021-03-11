@@ -1,5 +1,5 @@
 // Get data
-var fileName = "../../data/test20.json";
+var fileName = "../../data/test25.json";
 var txtFile = new XMLHttpRequest();
 txtFile.onreadystatechange = function () {
     if (txtFile.readyState === 4 && txtFile.status == 200) {
@@ -71,16 +71,7 @@ function createGraph(data){
       .style("stroke-width", 0.7)
       .attr("source", function(d) {return d.source.index})
       .attr("target", function(d) {return d.target.index})
-  /*var group = svg
-    .datum(res)
-    .append("g")
-    .selectAll("g")
-    .data(function(d) { return d.groups; })
-    .enter()
-*/
 
-
-  // add the groups on the outer part of the circle
 var group = svg
     .datum(res)
     .append("g")
@@ -110,7 +101,7 @@ var arcs = group
       return subs[d.index]
     });
 
-
+    var opacityLow = 0.2;
 
 
     d3.select(".tooltipChord").remove();
@@ -119,8 +110,8 @@ var arcs = group
           .attr("class", "tooltipChord")
           .style("visibility", "hidden");
 
-    links.on("mouseover", function (d){
-      d3.selectAll("path").style("opacity", 0.25)
+    links.on("mouseenter", function (d){
+      d3.selectAll("path").style("opacity", opacityLow)
       d3.select(this)
       .style("stroke-width", 1.5)
       .style("opacity", 1)
@@ -141,25 +132,33 @@ var arcs = group
     tooltip.style("visibility", "hidden");
   })
 
-  arcs.on("click", function (d){
-    d3.selectAll("group")
-      .style("opacity", 0.25)
-    d3.selectAll("path")
-      .style("opacity", function (link) {
-        console.log(link)
-
-        if (link.source.index === d.index){
-          return 1
-        }
-        else if (link.target.index === d.index){
+  arcs.on("mouseenter", function (d){
+    d3.selectAll(".arc")
+      .style("opacity", function (a) {
+        if (matrix[a.index][d.index] > 0  || matrix[d.index][a.index] > 0 || a.index === d.index){
           return 1
         }
         else {
-          return 0.25
+          return opacityLow
         }
-      })
-    d3.select(this)
-    .style("opacity", 1)
+      });
+    d3.selectAll("path")
+      .style("opacity", function (link) {
+        if (link.source.index === d.index || link.target.index === d.index){
+          return 1
+        }
+        else {
+          return opacityLow
+        }
+      });
+  })
+
+  arcs.on("mouseout", function (d){
+    d3.selectAll("group")
+      .style("opacity", opacityLow)
+    d3.selectAll("path")
+      .style("opacity", 1)
+
   })
 
 }
