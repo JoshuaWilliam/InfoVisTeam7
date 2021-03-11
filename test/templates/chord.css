@@ -1,15 +1,13 @@
 div.tooltipChord {
   position: absolute;
-  opacity: 0.85;
   visibility: hidden;
-  background: white;
+  background: #2db5b5;
   font: 14px Verdana;
-  color: #396AC0;
-  border-radius: 10px;
+  color: #fff;
+  border-radius: 5px;
   padding: 5px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
+  border-width: 5px;
+
 }
 
 .ticklabels {

@@ -94,12 +94,19 @@ var arcs = group
 
   group.append("text")
     .attr("transform", function(d, i) {
-      //var extra_rot =  (d.startAngle + d.endAngle) / 2 > Math.PI ? 180 : 0;
-      return "rotate(" + ((d.startAngle + d.endAngle) / (2 * Math.PI) * 180 - 90) + ")"+ "translate(" + (outerRadius+ 10).toString() + ",0)";})
+      var rotateBool = false;
+      if ((d.startAngle + d.endAngle) / 2 > Math.PI) {
+        rotateBool = true;
+      }
+      var extra_rot = rotateBool ? 180 : 0;
+      var translateSign = rotateBool ? -1 : 1;
+      return "rotate(" + ((d.startAngle + d.endAngle) / (2 * Math.PI) * 180 - 90 + extra_rot) + ")"+ "translate(" + ((outerRadius+ 10) * translateSign ).toString() + ",0)";})
+    .style("text-anchor", function(d) { return ((d.startAngle + d.endAngle) / 2 > Math.PI) ? "end" : null; })
     .attr("class", "ticklabels")
     .text(function(d) {
       return subs[d.index]
     });
+
 
     var opacityLow = 0.2;
 
@@ -111,9 +118,12 @@ var arcs = group
           .style("visibility", "hidden");
 
     links.on("mouseenter", function (d){
-      d3.selectAll("path").style("opacity", opacityLow)
+      d3.selectAll("path").style("opacity", opacityLow);
+      d3.selectAll(".arc")
+        .style("opacity", function (a){
+          return d.source.index === a.index || d.target.index === a.index ? 1 : opacityLow;
+        })
       d3.select(this)
-      .style("stroke-width", 1.5)
       .style("opacity", 1)
       tooltip.style("visibility", "visible")
       tooltipText = "<b>" + subs[d["source"]["index"]] + "</b>:  " + d["source"]["value"] + "<br><b>"+  subs[d["target"]["index"]] + "</b>:   " + d["target"]["value"]
@@ -122,12 +132,10 @@ var arcs = group
 
     links.on("mousemove", function(){
     tooltip.style("left", (d3.event.pageX + 10) + "px")
-          .style("top", (d3.event.pageY) - 70 + "px");
+          .style("top", (d3.event.pageY) - 50 + "px");
         })
 
   links.on("mouseout", function(){
-    d3.select(this).style("stroke", "black")
-    .style("stroke-width", 0.7)
     d3.selectAll("path").style("opacity", 1)
     tooltip.style("visibility", "hidden");
   })
@@ -144,6 +152,7 @@ var arcs = group
       });
     d3.selectAll("path")
       .style("opacity", function (link) {
+        console.log(d)
         if (link.source.index === d.index || link.target.index === d.index){
           return 1
         }
