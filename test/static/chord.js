@@ -140,6 +140,10 @@ var arcs = group
     tooltip.style("visibility", "hidden");
   })
 
+  links.on("click", function(d){
+    initBarChart(subs[d.source.index], subs[d.target.index]);
+  })
+
   arcs.on("mouseenter", function (d){
     d3.selectAll(".arc")
       .style("opacity", function (a) {
@@ -152,7 +156,6 @@ var arcs = group
       });
     d3.selectAll("path")
       .style("opacity", function (link) {
-        console.log(d)
         if (link.source.index === d.index || link.target.index === d.index){
           return 1
         }
@@ -162,7 +165,7 @@ var arcs = group
       });
   })
 
-  arcs.on("mouseout", function (d){
+  arcs.on("mouseout", function (){
     d3.selectAll("group")
       .style("opacity", opacityLow)
     d3.selectAll("path")
