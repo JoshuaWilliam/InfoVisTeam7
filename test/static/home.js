@@ -13,9 +13,15 @@ var svg = d3.select("#my_dataviz")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-//Read the data
-d3.csv("scatterplot.csv", function(data) {
+//Request the data
+function getScatterData() {
+  url = "/scatter_data";
+  fetch(url);
+}
 
+getScatterData();
+//Read the data
+d3.csv("test/static/scatterplot.csv", function(data) {
     console.log("reading csv")
     var data_source = [];
     var data_anger = [];
@@ -70,4 +76,3 @@ d3.csv("scatterplot.csv", function(data) {
         .attr("fill", "#69b3a2")
 
 })
-

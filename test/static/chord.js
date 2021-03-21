@@ -1,5 +1,5 @@
 // Get data
-var fileName = "../../data/test25.json";
+var fileName = "../data/test25.json";
 var txtFile = new XMLHttpRequest();
 txtFile.onreadystatechange = function () {
     if (txtFile.readyState === 4 && txtFile.status == 200) {
