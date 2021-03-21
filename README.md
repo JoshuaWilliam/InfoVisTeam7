@@ -1,5 +1,3 @@
 # InfoVisTeam7
 
-Add the .tsv files in this folder as :
-- soc-redditHyperlinks-body.tsv
-- soc-redditHyperlinks-title.tsv
+Switch to the Flask branch to find the demo page including all visualisations.
