@@ -207,35 +207,49 @@ function groupTicks(d) {
 
 
 // set the dimensions and margins of the graph
-var margin = {
-    top: 30,
-    right: 30,
-    bottom: 70,
-    left: 60
-  },
-  width = 460 - margin.left - margin.right,
-  height = 400 - margin.top - margin.bottom;
+// var margin = {
+//     top: 30,
+//     right: 30,
+//     bottom: 70,
+//     left: 60
+//   },
+//   width = 460 - margin.left - margin.right,
+//   height = 400 - margin.top - margin.bottom;
+//
+// // append the svg object to the body of the page
+// var scatter_svg = d3.select("#scatter_plot")
+//   .append("svg")
+//   .attr("width", width + margin.left + margin.right)
+//   .attr("height", height + margin.top + margin.bottom)
+//   .append("g")
+//   .attr("transform",
+//     "translate(" + margin.left + "," + margin.top + ")");
 
-// append the svg object to the body of the page
-var scatter_svg = d3.select("#scatter_plot")
-  .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform",
-    "translate(" + margin.left + "," + margin.top + ")");
+// function createScatterGraph(scatter_data) {
+function createScatterGraph() {
 
-function createScatterGraph(scatter_data) {
+  var margin = {top: 10, right: 30, bottom: 20, left: 50},
+      width = 1000 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+  var scatter_svg = d3.select("#my_dataviz2")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
   //Read the data
-  d3.csv(scatter_data, function(data) {
+  d3.csv("/scatter_data", function(data) {
     console.log("reading csv")
     var data_source = [];
     var data_anger = [];
     var data_sad = [];
     var data_swear = [];
     var data_sentiment = [];
-    console.log(scatter_data);
-    scatter_data.forEach(function(item) {
+    console.log(data);
+    data.forEach(function(item) {
       data_source.push(item.SOURCE_SUBREDDIT)
       var key = item.SOURCE_SUBREDDIT
       var anger = {
@@ -310,5 +324,6 @@ function createScatterGraph(scatter_data) {
 
 
 // Get data
-getChordData();
-getScatterData();
+// getChordData();
+// getScatterData();
+createScatterGraph();

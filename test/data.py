@@ -3,8 +3,11 @@ import json
 
 
 def read_scatter():
-    df = pd.read_csv("test/data/scatterplot.csv")
-    return df.to_json()
+    with open("test/data/scatterplot.csv") as f:
+        print(f)
+        df = pd.read_csv(f)
+    # return df.to_json()
+    return df.to_csv()
 
 
 def read_chord_data():
