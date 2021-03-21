@@ -1,17 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <!-- Load d3.js -->
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script type="text/javascript" src="../static/home.js"></script>
-    <title>Demo</title>
-    <h1>First investigation of the data in scatter plot</h1>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
+  <meta charset="UTF-8">
+  <script src="https://d3js.org/queue.v1.min.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+  <!-- <script type="text/javascript" src="../static/home.js"></script> -->
+  <title>InfoViz Demo Team 7 </title>
 </head>
+
 <body>
-    <div id="my_dataviz"></div>
+
+  <div class="container-fluid">
+    <div class="row title justify-content-md-center">
+      <h1>Information Visualization Team 7</h1>
+    </div>
+
+    <div class="row plot-section">
+      <div class="col-4 plot-text my-auto">
+        <h3>Scatter Plot</h3>
+        <p>
+          This is some filling text for the scatter plot.
+          It just serves to check how this area will look with the plot next to it.
+          sdfasdfasdfasdfasdfasdf sdf asd d fs df ajsdjgj kj koj.
+        </p>
+      </div>
+
+      <div class="col-8 plot-figure">
+        <div id="scatter_plot">
+        </div>
+      </div>
+      
+    </div>
+
+
+
+
+
+    <div class="row plot-section">
+      <div class="col-8 plot-figure">
+        <div id="chord_plot">
+        </div>
+      </div>
+
+      <div class="col-4 plot-text my-auto">
+        <h3>Chord Plot</h3>
+        <p>
+          This is some filling text for the chord plot.
+          It just serves to check how this area will look with the plot next to it.
+          sdfasdfasdfasdfasdfasdf sdf asd d fs df ajsdjgj kj koj.
+        </p>
+      </div>
+
+    </div>
+  </div>
 </body>
+
 </html>
+
+<script type="text/javascript" src="../static/main.js"></script>
 
 
 

@@ -227,103 +227,132 @@ function groupTicks(d) {
 
 // function createScatterGraph(scatter_data) {
 function createScatterGraph() {
+  var margin_scatter = {
+      top: 10,
+      right: 30,
+      bottom: 20,
+      left: 50
+    },
+    scatter_width = 800 - margin_scatter.left - margin_scatter.right,
+    scatter_height = 400 - margin_scatter.top - margin_scatter.bottom;
 
-  var margin = {top: 10, right: 30, bottom: 20, left: 50},
-      width = 1000 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+  var scatter_svg = d3.select("#scatter_plot")
+    .append("svg")
+    .attr("width", scatter_width + margin_scatter.left + margin_scatter.right)
+    .attr("height", scatter_height + margin_scatter.top + margin_scatter.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin_scatter.left + "," + margin_scatter.top + ")");
 
-  var scatter_svg = d3.select("#my_dataviz2")
-      .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
 
   //Read the data
   d3.csv("/scatter_data", function(data) {
-    console.log("reading csv")
-    var data_source = [];
-    var data_anger = [];
-    var data_sad = [];
-    var data_swear = [];
-    var data_sentiment = [];
-    console.log(data);
-    data.forEach(function(item) {
-      data_source.push(item.SOURCE_SUBREDDIT)
-      var key = item.SOURCE_SUBREDDIT
-      var anger = {
-        "source": key,
-        "value": item.mean_liwc_anger
-      }
-      var sad = {
-        "source": key,
-        "value": item.mean_liwc_sad
-      }
-      var swear = {
-        "source": key,
-        "value": item.mean_liwc_swear
-      }
-      var sentiment = {
-        "source": key,
-        "value": item.mean_vader_sentiment
-      }
 
-      data_anger.push(anger)
-      data_sad.push(sad)
-      data_swear.push(swear)
-      data_sentiment.push(sentiment)
+    console.log("csv data1:", data)
+    console.log("scatter_height", scatter_height);
+    console.log("scatter_width", scatter_height);
 
-    })
-    console.log(data_sentiment)
-    data_anger.map(function(d) {
-      console.log(d.source)
-    })
+    var subgroups = data.columns.slice(1)
+    var groups = d3.map(data, function(d) {
+      return (d.SOURCE_SUBREDDIT)
+    }).keys()
+    console.log("groups1:", groups)
 
     // Add X axis
     var x = d3.scaleBand()
-      .range([0, width])
-      .domain(data_anger.map(function(d) {
-        return d.source;
-      }))
-      .padding(0.2);
+      .domain(groups)
+      .range([0, scatter_width])
+      .padding([0.2])
     scatter_svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
+      .attr("transform", "translate(0," + (scatter_height / 2) + ")")
+      .call(d3.axisBottom(x).tickSize(0));
 
-    // Add Y axis
     var y = d3.scaleLinear()
-      .domain([-2, 1])
-      .range([height, 0]);
+      .domain([-0.3, 0.3])
+      .range([scatter_height, 0]);
     scatter_svg.append("g")
       .call(d3.axisLeft(y));
 
-    // Add dots
-    scatter_svg.selectAll(".bar")
-      .data(data_anger)
+    //add tooltips
+    var tooltip = d3.select("#scatter_plot")
+      .append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+
+    var mouseover = function(d) {
+      tooltip
+        .style("opacity", 1)
+    }
+
+    var mousemove = function(d) {
+      tooltip
+        .html("The exact value of<br>" + d.key + "<br>is<br>" + d.value)
+        .style("left", (d3.mouse(this)[0] + 90) + "px")
+        .style("top", (d3.mouse(this)[1]) + "px")
+    }
+
+    var mouseleave = function(d) {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0)
+    }
+
+    var xSubgroup = d3.scaleBand()
+      .domain(subgroups)
+      .range([0, x.bandwidth()])
+      .padding([0.05])
+
+    // color palette = one color per subgroup
+    var color = d3.scaleOrdinal()
+      .domain(subgroups)
+      .range(['#A52A2A', '#FF8700', '#4daf4b', '#FFEBCD'])
+
+    scatter_svg.append("g")
+      .selectAll("g")
+      .data(data)
       .enter()
-      .append("rect")
-      .attr("x", function(d) {
-        return x(d.source);
+      .append("g")
+      .attr("transform", function(d) {
+        return "translate(" + x(d.SOURCE_SUBREDDIT) + ",0)";
       })
-      .attr("y", function(d) {
+      .selectAll("dot")
+      .data(function(d) {
+        return subgroups.map(function(key) {
+          return {
+            key: key,
+            value: d[key]
+          };
+        });
+      })
+      .enter().append("circle")
+      .attr("cx", function(d) {
+        return xSubgroup(d.key);
+      })
+      .attr("cy", function(d) {
         return y(d.value);
       })
-      .attr("width", x.bandwidth())
-      .attr("height", function(d) {
-        return height - y(d.Value);
+      .attr("r", 5)
+      .attr("fill", function(d) {
+        return color(d.key);
       })
-      .attr("fill", "#69b3a2")
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave)
 
   })
+
+  console.log("scatter: ", scatter_svg);
 }
 // generatePlots();
 
 
 // Get data
-// getChordData();
 // getScatterData();
 createScatterGraph();
+getChordData();
