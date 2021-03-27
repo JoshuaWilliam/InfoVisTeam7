@@ -20,9 +20,10 @@ function createGraph(data){
   var svg = d3.select("body")
     .append("svg")
       .attr("width", 800)
-      .attr("height", 800)
+      .attr("height", 750)
+      .attr("class", "chord-container")
     .append("g")
-      .attr("transform", "translate(400,400)")
+      .attr("transform", "translate(375,375)")
 
   var limit = 50
 
@@ -40,11 +41,6 @@ function createGraph(data){
     matrix.push(submatrix)
   }
 
-
-  // create a matrix
-
-  // 4 groups, so create a vector of 4 colors
-  //var colors = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd']
   var myColor = d3.scaleOrdinal().domain(data)
   .range(d3.schemeSet3);
   // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon

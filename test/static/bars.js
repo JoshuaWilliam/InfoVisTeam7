@@ -37,9 +37,9 @@ function initBarChart(source, target) {
 
 function createBarChart(sourceData, targetData) {
   var data = sourceData
-  var margin = {top: 70, right: 0, bottom: 100, left: 90};
-  var w = 900 - margin.left;
-  var h = 645 - margin.top - margin.bottom;
+  var margin = {top: 70, right: 50, bottom: 100, left: 90};
+  var w = 900 - margin.left - margin.right;
+  var h = 700 - margin.top - margin.bottom;
   subgroups = ['Source', 'Target']
 
   categories = ['LIWC_Swear',
@@ -50,7 +50,7 @@ function createBarChart(sourceData, targetData) {
   var svgChart;
 
   var myColor = d3.scaleOrdinal().domain(subgroups)
-    .range(d3.schemeSet3);
+    .range(["#5dc8c9", "#d16262"])
 
   fullData = [sourceData, targetData]
 
@@ -58,7 +58,7 @@ function createBarChart(sourceData, targetData) {
   if (d3.select(".barChart")['_groups'][0][0] === null) {
     svgChart = d3.select("body").append("svg")
                   .attr("class", "barChart")
-                  .attr("width", w + margin.left)
+                  .attr("width", w + margin.left + margin.right)
                   .attr("height", h + margin.top + margin.bottom)
                 .append("g")
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -68,6 +68,7 @@ function createBarChart(sourceData, targetData) {
 
     for (let cat of categories) {
       if (data[cat] > maxliwc) {maxliwc = data[cat]}
+      if (targetData[cat] > maxliwc) {maxliwc = targetData[cat]}
     }
 
     var yScale = d3.scaleLinear()
@@ -86,10 +87,10 @@ function createBarChart(sourceData, targetData) {
     d3.select(".graphTitle").remove();
     svgChart.append("text")
         .attr("class", "graphTitle")
-        .attr("x", 0)
+        .attr("x", w / 6)
         .attr("y", - 18)
         .attr("text-anchor", "start")
-        .text(sourceData["Compound sentiment calculated by VADER"] + " Sentiment between " + sourceData['SOURCE_SUBREDDIT'] + " and " + sourceData['TARGET_SUBREDDIT']);
+        .html("LIWC scores between "  + reddit_link(sourceData['SOURCE_SUBREDDIT']) + " and " + reddit_link(sourceData['TARGET_SUBREDDIT']));
 
     // Add label to y-axis
     svgChart.append("text")
@@ -97,20 +98,18 @@ function createBarChart(sourceData, targetData) {
       .attr("class", "y-axis-label")
       .attr("x", -(h / 2))
       .attr("text-anchor", "middle")
-      .attr("y", - 35)
+      .attr("y", - 50)
       .text("LIWC scores");
 
 
     d3.select(".y-axis").remove();
       // Create y-axis
-    var yAxis = d3.axisLeft(yScale);
+    var yAxis = d3.axisLeft(yScale)
+            .ticks(5);
 
     svgChart.append("g")
             .attr("class", "y-axis")
             .call(yAxis);
-
-
-
 
 
   var yScale = d3.scaleLinear()
@@ -163,6 +162,29 @@ function createBarChart(sourceData, targetData) {
                 .attr("height", function(d) {return h - yScale(d.value)})
                 .attr("fill", function(d) {return myColor(d.key)});
 
+  d3.selectAll(".legend").remove();
+  var legend = svgChart.selectAll(".legend")
+    .data(subgroups)
+    .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d,i) {return "translate(0," + i * 20 + ")"; })
+        .style("opacity","1");
 
+  legend.append("rect")
+      .attr("x", w - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d) { return myColor(d); });
 
+  legend.append("text")
+      .attr("x", w - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .attr("class", "legend-text")
+      .text(function(d) { return (d === 'Source') ? "/r/" + data['SOURCE_SUBREDDIT'] : "/r/" + data['TARGET_SUBREDDIT']; });
   }
+
+function reddit_link(sub) {
+  return "<a href=\'https://www.reddit.com/r/" + sub + "\' target=\'_blank\'>/r/" + sub + "</a>"
+}
