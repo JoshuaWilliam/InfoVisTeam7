@@ -18,6 +18,16 @@ function getSubData(source, target) {
       if (bool1 == true && bool2 == true) {break}
     }
 
+    // Set values to zero if object does not exist
+    if (data2 === undefined) {
+      data2 = JSON.parse(JSON.stringify(data1));
+      Object.keys(data2).forEach(function(key){
+        if (key !== 'SOURCE_SUBREDDIT' && key !== 'TARGET_SUBREDDIT')
+        data2[key] = 0 });
+      var temp = data2['SOURCE_SUBREDDIT']
+      data2['SOURCE_SUBREDDIT'] = data2['TARGET_SUBREDDIT']
+      data2['TARGET_SUBREDDIT'] = temp
+    }
   createBarChart(data1, data2);
 })}
 
@@ -30,7 +40,6 @@ function createBarChart(sourceData, targetData) {
   var margin = {top: 70, right: 0, bottom: 100, left: 90};
   var w = 900 - margin.left;
   var h = 645 - margin.top - margin.bottom;
-  console.log(targetData)
   subgroups = ['Source', 'Target']
 
   categories = ['LIWC_Swear',
@@ -42,8 +51,6 @@ function createBarChart(sourceData, targetData) {
 
   var myColor = d3.scaleOrdinal().domain(subgroups)
     .range(d3.schemeSet3);
-
-  console.log(myColor("Source"))
 
   fullData = [sourceData, targetData]
 
@@ -142,7 +149,6 @@ function createBarChart(sourceData, targetData) {
                 .enter()
                 .append("g")
                   .attr("transform", function(d) {
-                    console.log(d)
                     return "translate(" + xScale(d) + ",0)"; })
                 .selectAll("rect")
                 .data(function(d) {
@@ -150,28 +156,13 @@ function createBarChart(sourceData, targetData) {
                     var val = (key === "Source") ? fullData[0][d] : fullData[1][d]
                     return {key: key, value: val}; }); })
                 .enter().append("rect")
-                .attr("x", function(d) {return (d === undefined) ? 0 : xSubgroup(d.key); })
-                .attr("y", function(d) {return (d === undefined) ? 0 :yScale(d.value);})
+                .attr("x", function(d) {return xSubgroup(d.key)})
+                .attr("class", "bar")
+                .attr("y", function(d) {return yScale(d.value)})
                 .attr("width", xSubgroup.bandwidth())
-                .attr("height", function(d) {return (d === undefined) ? 0 : h - yScale(d.value);})
+                .attr("height", function(d) {return h - yScale(d.value)})
                 .attr("fill", function(d) {return myColor(d.key)});
 
-                /*
-                .attr("class","bar")
-                .attr("x", function(d) {
-                          return xScale(d);
-                        })
-                .attr("y", function(d) {
-                      return yScale(sourceData[d]);
-                        })
-                .attr("width", xScale.bandwidth())
-                .attr("height", function(d) {
-                      return h - yScale(sourceData[d]);
-                })
-                .attr("fill", "skyblue");
-                */
 
 
   }
-
-  svgChart.call(yAxis);
