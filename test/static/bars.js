@@ -32,6 +32,8 @@ function getSubData(source, target) {
 })}
 
 function initBarChart(source, target) {
+  console.log('initialising')
+  console.log(source)
   getSubData(source, target);
 }
 
@@ -56,7 +58,7 @@ function createBarChart(sourceData, targetData) {
 
   // Create svg on first time
   if (d3.select(".barChart")['_groups'][0][0] === null) {
-    svgChart = d3.select("body").append("svg")
+    svgChart = d3.select("#bars").append("svg")
                   .attr("class", "barChart")
                   .attr("width", w + margin.left + margin.right)
                   .attr("height", h + margin.top + margin.bottom)
@@ -183,7 +185,11 @@ function createBarChart(sourceData, targetData) {
       .style("text-anchor", "end")
       .attr("class", "legend-text")
       .text(function(d) { return (d === 'Source') ? "/r/" + data['SOURCE_SUBREDDIT'] : "/r/" + data['TARGET_SUBREDDIT']; });
-  }
+
+
+
+
+}
 
 function reddit_link(sub) {
   return "<a href=\'https://www.reddit.com/r/" + sub + "\' target=\'_blank\'>/r/" + sub + "</a>"

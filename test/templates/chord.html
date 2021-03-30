@@ -7,7 +7,14 @@
 </head>
 
 <body>
-  <div id="my_dataviz"></div>
+  <span id="chord"></span>
+  <span id="bars">
+    <form name="subform1" >
+        <input type="text" id="inp1" placeholder="Subreddit 1&hellip;">
+        <input type="text" id="inp2" placeholder="Subreddit 2&hellip;">
+        <input name="Submit"  type="button" value="Submit" onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value)">
+    </form>
+  </span>
   <script src="https://d3js.org/queue.v1.min.js"></script>
   <script src="https://d3js.org/d3.v4.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>

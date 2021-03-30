@@ -17,7 +17,7 @@ function createGraph(data){
   var outerRadius = 260;
 
 
-  var svg = d3.select("body")
+  var svg = d3.select("#chord")
     .append("svg")
       .attr("width", 800)
       .attr("height", 750)
@@ -122,7 +122,7 @@ var arcs = group
       d3.select(this)
       .style("opacity", 1)
       tooltip.style("visibility", "visible")
-      tooltipText = "<b>" + subs[d["source"]["index"]] + "</b>:  " + d["source"]["value"] + "<br><b>"+  subs[d["target"]["index"]] + "</b>:   " + d["target"]["value"]
+      tooltipText = "<b>Connections originating from source</b><br>&nbsp&nbsp" + subs[d["source"]["index"]] + ":  " + d["source"]["value"] + "<br>&nbsp&nbsp"+  subs[d["target"]["index"]] + ":   " + d["target"]["value"]
       tooltip.html(tooltipText)
     })
 
