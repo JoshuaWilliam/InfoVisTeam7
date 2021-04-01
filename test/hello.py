@@ -65,7 +65,7 @@ def get_cluster_data():
     return send_file(
         response_stream,
         mimetype="text/csv",
-        attachment_filename="Artitra.csv",
+        attachment_filename="Asdrtitra.csv",
     )
 
 

@@ -9,10 +9,9 @@ from sklearn.decomposition import PCA
 
 def read_scatter():
     with open("test/data/scatterplot.csv") as f:
-        print(f)
-        df = pd.read_csv(f)
+        df = pd.read_csv(f, index_col=0)
     # return df.to_json()
-    return df.to_csv()
+    return df.to_csv(index=False)
 
 
 def read_chord_data():

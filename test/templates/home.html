@@ -24,9 +24,8 @@
       <div class="col-4 plot-text my-auto">
         <h3>Scatter Plot</h3>
         <p>
-          This is some filling text for the scatter plot.
-          It just serves to check how this area will look with the plot next to it.
-          sdfasdfasdfasdfasdfasdf sdf asd d fs df ajsdjgj kj koj.
+          This introductory visualization displays viewers sentiment means across a few popular subreddits.
+          It shows the attitude of people under speficic sentiment classes which can be distinguished by their colors.
         </p>
       </div>
 
@@ -37,23 +36,13 @@
 
     </div>
 
-
-
     <div class="row plot-section">
-
       <div class="col-12 plot-text my-auto">
-        <h3>Chord Plot</h3><br />
+        <h3>Multiview</h3><br />
         <p>
-          This is some filling text for the chord plot.
-          It just serves to check how this area will look with the plot next to it.
-          sdfasdfasdfasdfasdfasdf sdf asd d fs df ajsdjgj kj koj.
+          The focus of this multiview is the chord diagram, displaying a network of the subreddits with its relational properties. <br/>
+          The linked visualizations consist of a bar chart for LIWC comparison between two subreddits as well as a scatterplot indicating the clusters where subreddits with similar sentiment and topics fall into.
         </p>
-      </div>
-
-
-      <div class="col-4 plot-figure mx-auto">
-        <div id="chord_plot">
-        </div>
       </div>
 
 
@@ -70,20 +59,41 @@
         </div>
       </div>
 
+      <div class="col-4 plot-figure mx-auto">
+        <div id="chord_plot">
+        </div>
+      </div>
+
+
       <div class="col-4 plot-figure">
-        <h6>Number
+        <h6>Feature:
           <select onchange="changeClusterFeature()" id="indicatorChoice" input="dropdown">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
+            <option value="1">Compound sentiment calculated by VADER
+            </option>
+            <option value="2">LIWC_Swear
+            </option>
+            <option value="3">LIWC_Social
+            </option>
+            <option value="4">LIWC_Family
+            </option>
+            <option value="5">LIWC_Friends
+            </option>
+            <option value="6">LIWC_Humans
+            </option>
+            <option value="7">LIWC_Affect
+            </option>
+            <option value="8">LIWC_Posemo
+            </option>
+            <option value="9">LIWC_Negemo
+            </option>
+            <option value="10">LIWC_Anx
+            </option>
+            <option value="11">LIWC_Anger
+            </option>
+            <option value="11">LIWC_Sad
+            </option>
+
+
           </select>
           <div id="cluster_plot">
           </div>

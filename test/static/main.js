@@ -33,7 +33,7 @@ function generatePlots() {
 
 function getSubData(source, target) {
   d3.csv("/bar_data", function(data) {
-    console.log(data);
+    // console.log(data);
     var data1;
     var data2;
     var bool1 = false;
@@ -628,6 +628,7 @@ function highlighter(sub1, sub2) {
 
 function createClusterGraph(featureNumber) {
 
+
   // CLUSTER SECTION
 
 
@@ -638,16 +639,16 @@ function createClusterGraph(featureNumber) {
   };
 
 
-  d3.csv("/cluster_data?feature="+ featureNumber, function(data) {
+  d3.csv("/cluster_data?feature=" + featureNumber, function(data) {
     console.log(featureNumber);
     var margin = {
         top: 50,
-        right: 300,
+        right: 100,
         bottom: 50,
         left: 50
       },
       outerWidth = 1050,
-      outerHeight = 500,
+      outerHeight = 700,
       width = outerWidth - margin.left - margin.right,
       height = outerHeight - margin.top - margin.bottom;
 
@@ -744,6 +745,13 @@ function createClusterGraph(featureNumber) {
       .style("text-anchor", "end")
       .text(xCat);
 
+    svg.append("text")
+      .attr("transform",
+        "translate(" + (width / 2) + " ," +
+        (height + 50) + ")")
+      .style("text-anchor", "middle")
+      .text("Feature 1");
+
     svg.append("g")
       .classed("y axis", true)
       .call(yAxis)
@@ -754,6 +762,14 @@ function createClusterGraph(featureNumber) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text(yCat);
+
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Feature 2");
 
     var objects = svg.append("svg")
       .classed("objects", true)
@@ -790,25 +806,25 @@ function createClusterGraph(featureNumber) {
       .on("mouseover", tip.show)
       .on("mouseout", tip.hide);
 
-    var legend = svg.selectAll(".legend")
-      .data(color.domain())
-      .enter().append("g")
-      .classed("legend", true)
-      .attr("transform", function(d, i) {
-        return "translate(0," + i * 20 + ")";
-      });
+    // var legend = svg.selectAll(".legend")
+    //   .data(color.domain())
+    //   .enter().append("g")
+    //   .classed("legend", true)
+    //   .attr("transform", function(d, i) {
+    //     return "translate(0," + i * 20 + ")";
+    //   });
+    //
+    // legend.append("circle")
+    //   .attr("r", 3.5)
+    //   .attr("cx", width + 20)
+    //   .attr("fill", color);
 
-    legend.append("circle")
-      .attr("r", 3.5)
-      .attr("cx", width + 20)
-      .attr("fill", color);
-
-    legend.append("text")
-      .attr("x", width + 26)
-      .attr("dy", ".35em")
-      .text(function(d) {
-        return d;
-      });
+    // legend.append("text")
+    //   .attr("x", width + 26)
+    //   .attr("dy", ".35em")
+    //   .text(function(d) {
+    //     return d;
+    //   });
 
     dots.on("mouseenter", function(d) {
       tip.style("visibility", "visible")
@@ -847,6 +863,7 @@ function createClusterGraph(featureNumber) {
 }
 
 function changeClusterFeature() {
+  d3.select("#cluster_plot").selectAll("*").remove();
   feature = document.getElementById("indicatorChoice").value;
   console.log(feature);
   createClusterGraph(feature);

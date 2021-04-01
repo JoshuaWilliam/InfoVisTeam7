@@ -1,9 +1,14 @@
 .title{
   margin: 80px;
+  font-size: 180px;
 }
 
 .plot-section{
   margin: 230px 180px;
+}
+
+.scatter_plot .tooltip{
+  font: 14px Verdana;
 }
 
 body {
@@ -99,7 +104,7 @@ a {
   shape-rendering: crispEdges;
 }
 
-/* 
+/*
 h1 {
   font-family: Alegreya SC, serif;
 } */
