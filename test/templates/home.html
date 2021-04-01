@@ -40,31 +40,55 @@
 
 
     <div class="row plot-section">
-      <div class="col-4 plot-figure">
-        <div id="chord_plot">
-        </div>
-      </div>
 
-      <div class="col-6 plot-figure">
-        <div id="bar_form">
-          <form name="subform1">
-            <input type="text" id="inp1" placeholder="Subreddit 1&hellip;">
-            <input type="text" id="inp2" placeholder="Subreddit 2&hellip;">
-            <input name="Submit" type="button" value="Submit" onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value)">
-          </form>
-        </div>
-        <div id="bar_plot">
-        </div>
-      </div>
-
-      <div class="col-2 plot-text my-auto">
-        <h3>Chord Plot</h3>
+      <div class="col-12 plot-text my-auto">
+        <h3>Chord Plot</h3><br />
         <p>
           This is some filling text for the chord plot.
           It just serves to check how this area will look with the plot next to it.
           sdfasdfasdfasdfasdfasdf sdf asd d fs df ajsdjgj kj koj.
         </p>
       </div>
+
+
+      <div class="col-4 plot-figure mx-auto">
+        <div id="chord_plot">
+        </div>
+      </div>
+
+
+      <div class="col-4 plot-figure  mx-auto">
+        <div id="bar_form">
+          <form name="subform1">
+            <input type="text" id="inp1" placeholder="Subreddit 1&hellip;">
+            <input type="text" id="inp2" placeholder="Subreddit 2&hellip;">
+            <input name="Submit" type="button" value="Submit"
+              onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value); highlighter(document.getElementById('inp1').value,document.getElementById('inp2').value)">
+          </form>
+        </div>
+        <div id="bar_plot">
+        </div>
+      </div>
+
+      <div class="col-4 plot-figure">
+        <h6>Number
+          <select onchange="changeClusterFeature()" id="indicatorChoice" input="dropdown">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select>
+          <div id="cluster_plot">
+          </div>
+      </div>
+
 
     </div>
   </div>

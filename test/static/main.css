@@ -25,7 +25,17 @@ div.tooltipChord {
   border-radius: 5px;
   padding: 5px;
   border-width: 5px;
+}
 
+div.tooltipScatter {
+  position: absolute;
+  visibility: hidden;
+  background: #2db5b5;
+  font: 14px Verdana;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  border-width: 5px;
 }
 
 a {
@@ -80,4 +90,35 @@ a {
 .legend-text {
   fill: #d4d4d4;
   font: 12px Calibri Light;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  shape-rendering: crispEdges;
+}
+
+/* 
+h1 {
+  font-family: Alegreya SC, serif;
+} */
+
+.scatterbackground {
+  fill: transparent;
+  shape-rendering: crispEdges;
+}
+.axisLine {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 2px;
+}
+
+.dot {
+  fill-opacity: .5;
+}
+.dot:hover {
+  stroke: black;
+
 }

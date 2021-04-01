@@ -53,5 +53,21 @@ def get_bar_data():
     )
 
 
+@app.route('/cluster_data', methods=['GET'])
+def get_cluster_data():
+    feature = request.args.get('feature')
+    if feature == "undefined":
+        feature = None
+    print('TESTINGSSS CLUSTERS')
+    cluster_data = data.read_cluster_data(feature)
+    # return scatter_data
+    response_stream = BytesIO(cluster_data.encode())
+    return send_file(
+        response_stream,
+        mimetype="text/csv",
+        attachment_filename="Artitra.csv",
+    )
+
+
 if __name__ == '__main__':
     app.run()
