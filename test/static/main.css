@@ -4,5 +4,80 @@
 
 .plot-section{
   margin: 230px 180px;
+}
 
+body {
+-webkit-font-smoothing: antialiased;
+-o-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+
+svg.chord-container {
+}
+
+div.tooltipChord {
+  position: absolute;
+  visibility: hidden;
+  background: #2db5b5;
+  font: 14px Verdana;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  border-width: 5px;
+
+}
+
+a {
+  text-decoration: underline;
+  fill: #0080ff;
+}
+
+.ticklabels {
+  font: 10px Verdana;
+}
+
+.y-axis-label {
+  font: 16px Calibri;
+  fill: #d4d4d4;
+}
+
+.y-axis .domain {
+  stroke: #d4d4d4;
+}
+
+.y-axis line {
+  stroke: #d4d4d4;
+}
+
+.y-axis .tick {
+  stroke: #d4d4d4;
+  font: 14px Calibri Light;
+}
+
+.x-axis .domain {
+  stroke: #d4d4d4;
+}
+
+.x-axis line {
+  stroke: #d4d4d4;
+}
+
+.x-axis .tick {
+  stroke: #d4d4d4;
+  font: 12px Calibri Light;
+}
+
+.barChart {
+  background-color: #242424;
+}
+
+.graphTitle {
+  font: 20px Calibri;
+  fill: #d4d4d4;
+}
+
+.legend-text {
+  fill: #d4d4d4;
+  font: 12px Calibri Light;
 }

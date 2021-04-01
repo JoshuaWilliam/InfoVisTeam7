@@ -40,5 +40,18 @@ def get_scatter_data():
     )
 
 
+@app.route('/bar_data', methods=['GET'])
+def get_bar_data():
+    print('TESTINGSSS')
+    bar_data = data.read_bar_data()
+    # return scatter_data
+    response_stream = BytesIO(bar_data.encode())
+    return send_file(
+        response_stream,
+        mimetype="text/csv",
+        attachment_filename="averages.csv",
+    )
+
+
 if __name__ == '__main__':
     app.run()

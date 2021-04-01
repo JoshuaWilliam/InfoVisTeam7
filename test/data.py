@@ -14,3 +14,11 @@ def read_chord_data():
     with open('test/data/test25.json') as f:
         data = json.load(f)
     return data
+
+
+def read_bar_data():
+    with open("test/data/averages.csv") as f:
+        print(f)
+        df = pd.read_csv(f)
+    # return df.to_json()
+    return df.to_csv()
