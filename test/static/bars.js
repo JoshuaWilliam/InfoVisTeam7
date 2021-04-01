@@ -32,10 +32,9 @@ function getSubData(source, target) {
 })}
 
 function initBarChart(source, target) {
-  console.log('initialising')
-  console.log(source)
   getSubData(source, target);
 }
+
 
 function createBarChart(sourceData, targetData) {
   var data = sourceData

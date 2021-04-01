@@ -137,7 +137,9 @@ var arcs = group
   })
 
   links.on("click", function(d){
+    highlighter(subs[d.source.index], subs[d.target.index]);
     initBarChart(subs[d.source.index], subs[d.target.index]);
+
   })
 
   arcs.on("mouseenter", function (d){

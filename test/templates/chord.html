@@ -4,22 +4,40 @@
 <!-- Load d3.js -->
 <head>
   <link rel="stylesheet" href="chord.css">
+
 </head>
 
 <body>
   <span id="chord"></span>
   <span id="bars">
-    <form name="subform1" >
+    <form name="subform1" style= " margin: 0; margin-right: 0; padding: 0">
         <input type="text" id="inp1" placeholder="Subreddit 1&hellip;">
         <input type="text" id="inp2" placeholder="Subreddit 2&hellip;">
-        <input name="Submit"  type="button" value="Submit" onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value)">
+        <input name="Submit"  type="button" value="Submit" onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value); highlighter(document.getElementById('inp1').value,document.getElementById('inp2').value)">
     </form>
   </span>
+  <h6>Number
+      <select id = "indicatorChoice" input="dropdown">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+    </select> 
+  <div id="scatter"></div>
   <script src="https://d3js.org/queue.v1.min.js"></script>
   <script src="https://d3js.org/d3.v4.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script src="../static/chord.js"></script>
   <script src="../static/bars.js"></script>
+  <script src="../static/scatter2.js"></script>
   <script>
 
   </script>
