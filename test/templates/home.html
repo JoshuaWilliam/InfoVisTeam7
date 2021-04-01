@@ -34,20 +34,30 @@
         <div id="scatter_plot">
         </div>
       </div>
-      
+
     </div>
 
 
 
-
-
     <div class="row plot-section">
-      <div class="col-8 plot-figure">
+      <div class="col-4 plot-figure">
         <div id="chord_plot">
         </div>
       </div>
 
-      <div class="col-4 plot-text my-auto">
+      <div class="col-6 plot-figure">
+        <div id="bar_form">
+          <form name="subform1">
+            <input type="text" id="inp1" placeholder="Subreddit 1&hellip;">
+            <input type="text" id="inp2" placeholder="Subreddit 2&hellip;">
+            <input name="Submit" type="button" value="Submit" onClick="initBarChart(document.getElementById('inp1').value,document.getElementById('inp2').value)">
+          </form>
+        </div>
+        <div id="bar_plot">
+        </div>
+      </div>
+
+      <div class="col-2 plot-text my-auto">
         <h3>Chord Plot</h3>
         <p>
           This is some filling text for the chord plot.
